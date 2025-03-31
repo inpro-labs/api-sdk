@@ -1,14 +1,13 @@
 {
-  "name": "sputnik-labs-microservices",
+  "name": "@sputnik-labs/api-sdk",
   "version": "0.0.5",
   "description": "SDK for sputnik projects",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
-  "files": [
-    "dist"
-  ],
+  "files": ["dist"],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc"
   },
   "repository": {
     "type": "git",
@@ -21,12 +20,14 @@
   },
   "homepage": "https://github.com/sputnik-labs/api-sdk#readme",
   "peerDependencies": {
-    "@nestjs/common": "^11.0.12",
-    "@nestjs/core": "^11.0.12",
-    "reflect-metadata": "^0.2.2",
-    "rxjs": "^7.8.2"
   },
-  "dependencies": {
+  "devDependencies": {
+    "grunt": "^1.6.1",
+    "grunt-contrib-clean": "^2.0.1",
+    "grunt-shell": "^4.0.0",
     "typescript": "^5.5.4"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
   }
 }

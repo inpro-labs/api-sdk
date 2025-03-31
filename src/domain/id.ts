@@ -1,4 +1,4 @@
-import { Result } from "./result";
+import { Result } from "../core";
 
 export class ID {
   private _isNew = false;
