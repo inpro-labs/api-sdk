@@ -1,16 +1,12 @@
 {
   "name": "sputnik-labs-microservices",
-  "version": "0.0.1",
+  "version": "0.0.5",
   "description": "SDK for sputnik projects",
-<<<<<<< Updated upstream
-  "main": "index.ts",
-=======
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
     "dist"
   ],
->>>>>>> Stashed changes
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
