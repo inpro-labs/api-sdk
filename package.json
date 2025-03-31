@@ -1,6 +1,6 @@
 {
   "name": "@sputnik-labs/api-sdk",
-  "version": "0.0.3",
+  "version": "0.0.5",
   "description": "SDK for sputnik projects",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -20,11 +20,6 @@
   },
   "homepage": "https://github.com/sputnik-labs/api-sdk#readme",
   "peerDependencies": {
-    "@nestjs/common": "^11.0.12",
-    "@nestjs/core": "^11.0.12",
-    "reflect-metadata": "^0.2.2",
-    "rxjs": "^7.8.2",
-    "types-ddd": "^3.11.1"
   },
   "devDependencies": {
     "grunt": "^1.6.1",
