@@ -1,27 +1,23 @@
-name: Grunt Build
+name: Publish to GitHub Packages
 
 on:
-  push:
-    branches: ["main"]
   pull_request:
-    branches: ["main"]
+    branches: [main]
+  push:
+    branches: [main]
 
 jobs:
-  build:
+  build-and-publish:
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: [22.x]
-
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Use Node.js ${{ matrix.node-version }}
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 22.x
+          registry-url: https://npm.pkg.github.com/
 
       - name: Install dependencies
         run: npm install
@@ -29,5 +25,7 @@ jobs:
       - name: Build with Grunt
         run: npx grunt
 
-      - name: List dist folder
-        run: ls -la dist
+      - name: Publish package to GitHub Packages
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

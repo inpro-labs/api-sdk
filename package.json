@@ -1,9 +1,10 @@
 {
-  "name": "sputnik-labs-microservices",
-  "version": "0.0.1",
+  "name": "@sputnik-labs/api-sdk",
+  "version": "0.0.3",
   "description": "SDK for sputnik projects",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "files": ["dist"],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc"
@@ -30,5 +31,8 @@
     "grunt-contrib-clean": "^2.0.1",
     "grunt-shell": "^4.0.0",
     "typescript": "^5.5.4"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
   }
 }
