@@ -1,2 +1,2 @@
 export * from "./constants";
-export * from "./unwrap";
+export * from "./deep-equal";

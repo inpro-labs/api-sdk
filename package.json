@@ -2,7 +2,15 @@
   "name": "sputnik-labs-microservices",
   "version": "0.0.1",
   "description": "SDK for sputnik projects",
+<<<<<<< Updated upstream
   "main": "index.ts",
+=======
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+>>>>>>> Stashed changes
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -20,8 +28,7 @@
     "@nestjs/common": "^11.0.12",
     "@nestjs/core": "^11.0.12",
     "reflect-metadata": "^0.2.2",
-    "rxjs": "^7.8.2",
-    "types-ddd": "^3.11.1"
+    "rxjs": "^7.8.2"
   },
   "dependencies": {
     "typescript": "^5.5.4"
