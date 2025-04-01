@@ -1,6 +1,6 @@
 {
   "name": "@sputnik-labs/api-sdk",
-  "version": "1.0.4",
+  "version": "1.0.4-pre.1",
   "description": "SDK for sputnik projects",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

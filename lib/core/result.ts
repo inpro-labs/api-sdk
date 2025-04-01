@@ -1,3 +1,5 @@
+import { Entity } from "../domain";
+
 /**
  * A wrapper to represent the result of an operation that can succeed or fail.
  *
@@ -6,7 +8,7 @@
  * @template T - The success value type.
  * @template E - The error type (extends Error).
  */
-export class Result<T, E extends Error = Error> {
+export class Result<T = unknown, E extends Error = Error> {
   #ok: T | null = null;
   #err: E | null = null;
 
@@ -137,8 +139,8 @@ export class Result<T, E extends Error = Error> {
  * @param value - The success value.
  * @returns A `Result` representing success.
  */
-export function Ok<T>(value: T): Result<T> {
-  return new Result(value, null);
+export function Ok<T>(value: T): Result<T, never> {
+  return new Result<T, never>(value, null);
 }
 
 /**
@@ -148,7 +150,7 @@ export function Ok<T>(value: T): Result<T> {
  * @returns A `Result` representing failure.
  */
 export function Err<E extends Error>(error: E): Result<never, E> {
-  return new Result(null as never, error);
+  return new Result<never, E>(null, error);
 }
 
 /**
@@ -160,14 +162,21 @@ export function Err<E extends Error>(error: E): Result<never, E> {
  * @param results - An array of `Result` objects to combine.
  * @returns A `Result` object that contains the combined results.
  */
-export function Combine<T, E extends Error>(
-  results: Result<T, E>[]
-): Result<T[], E> {
-  return results.reduce<Result<T[], E>>((acc, result) => {
+type ResultArray<T extends readonly unknown[], E extends Error> = {
+  [K in keyof T]: Result<T[K], E>;
+};
+
+export function Combine<T extends readonly unknown[], E extends Error>(
+  results: ResultArray<T, E>
+): Result<T, E> {
+  const values: unknown[] = [];
+
+  for (const result of results) {
     if (result.isErr()) {
       return Err(result.unwrapErr());
     }
+    values.push(result.unwrap());
+  }
 
-    return Ok([...acc.unwrap(), result.unwrap()]) as Result<T[], E>;
-  }, Ok<T[]>([]) as Result<T[], E>);
+  return Ok(values as unknown as T);
 }
