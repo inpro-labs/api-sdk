@@ -1,17 +1,61 @@
-import { deepEqual } from "../utils";
+import isEqual from "lodash.isequal";
 
+/**
+ * Base class for value objects in the domain layer.
+ *
+ * Value objects are defined solely by their properties. They are immutable
+ * and do not have identity — two value objects with the same properties are considered equal.
+ *
+ * @template T - The shape of the value object's properties.
+ */
 export class ValueObject<T extends Record<string, unknown>> {
+  /** Internal properties of the value object. */
   private _props: T;
 
+  /**
+   * Creates a new value object instance.
+   *
+   * @param props - The properties that define the value object.
+   */
   constructor(props: T) {
     this._props = props;
   }
 
+  /**
+   * Compares this instance with another by reference.
+   *
+   * @param vo - The value object to compare with.
+   * @returns `true` if both objects are the same instance.
+   */
   public equals(vo: ValueObject<T>): boolean {
-    return vo === this || deepEqual(vo._props, this._props);
+    return vo === this;
   }
 
+  /**
+   * Performs a deep equality check between two value objects.
+   *
+   * @param vo - The value object to compare with.
+   * @returns `true` if both value objects have deeply equal properties.
+   */
+  public deepEquals(vo: ValueObject<T>): boolean {
+    return isEqual(this._props, vo._props);
+  }
+
+  /**
+   * Returns a shallow copy of the value object's properties.
+   *
+   * @returns A plain object containing the value object's properties.
+   */
   public toObject(): T {
     return { ...this._props };
+  }
+
+  /**
+   * Creates a deep clone of the value object.
+   *
+   * @returns A new instance of the value object with cloned properties.
+   */
+  public clone(): this {
+    return new (this.constructor as new (props: T) => this)(this._props);
   }
 }
