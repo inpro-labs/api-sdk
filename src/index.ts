@@ -1,3 +1,3 @@
-export * as Core from "./core";
-export * as Utils from "./utils";
-export * as Domain from "./domain";
+export * from "./core";
+export * from "./utils";
+export * from "./domain";
