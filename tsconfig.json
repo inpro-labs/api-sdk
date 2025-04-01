@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "outDir": "./dist",
-    "rootDir": "./src",
+    "rootDir": "lib",
     "declaration": true,
     "declarationMap": true,
     "sourceMap": true,
@@ -16,7 +16,7 @@
     "strict": true
   },
   "include": [
-    "src/**/*"
+    "lib/**/*"
   ],
   "exclude": [
     "node_modules",
