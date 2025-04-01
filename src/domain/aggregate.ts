@@ -92,7 +92,7 @@ export class Aggregate<T extends Record<any, any>> extends AggregateRoot {
    *
    * @returns A shallow copy of the aggregate's properties.
    */
-  public toObject(): T {
+  public toObject(): Omit<T, "id"> & { id: ID } {
     return { ...this._props, id: this._id };
   }
 }

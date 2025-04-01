@@ -71,8 +71,8 @@ export class Entity<T extends Record<any, any>> extends SettersAndGetters<T> {
    *
    * @returns A shallow copy of the entity's properties.
    */
-  public toObject(): T {
-    return { ...this._props };
+  public toObject(): Omit<T, "id"> & { id: ID } {
+    return { ...this._props, id: this._id };
   }
 
   /**
@@ -84,3 +84,5 @@ export class Entity<T extends Record<any, any>> extends SettersAndGetters<T> {
     return new (this.constructor as new (props: T) => this)(this._props);
   }
 }
+
+const entity = new Entity({ id: "123", name: "John" });
