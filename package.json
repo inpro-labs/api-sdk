@@ -4,7 +4,9 @@
   "description": "SDK for sputnik projects",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc"
@@ -19,8 +21,6 @@
     "url": "https://github.com/sputnik-labs/api-sdk/issues"
   },
   "homepage": "https://github.com/sputnik-labs/api-sdk#readme",
-  "peerDependencies": {
-  },
   "devDependencies": {
     "grunt": "^1.6.1",
     "grunt-contrib-clean": "^2.0.1",
@@ -29,5 +29,8 @@
   },
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/"
+  },
+  "peerDependencies": {
+    "@nestjs/cqrs": "^11.0.3"
   }
 }

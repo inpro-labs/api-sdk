@@ -10,10 +10,6 @@ export class Entity<T extends Record<string, unknown>> {
     this._props = { ...props, id };
   }
 
-  get props(): T {
-    return this._props;
-  }
-
   get id(): ID {
     return this._props.id;
   }
