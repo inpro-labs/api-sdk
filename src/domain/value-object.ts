@@ -7,10 +7,6 @@ export class ValueObject<T extends Record<string, unknown>> {
     this._props = props;
   }
 
-  get props(): T {
-    return this._props;
-  }
-
   public equals(vo: ValueObject<T>): boolean {
     return vo === this || deepEqual(vo._props, this._props);
   }
