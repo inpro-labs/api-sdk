@@ -1,5 +1,6 @@
 import { AggregateRoot } from "@nestjs/cqrs";
 import { ID } from "./id";
+import { SettersAndGetters } from "./setters-and-getters";
 
 /**
  * Base class for domain aggregates.
@@ -11,7 +12,9 @@ import { ID } from "./id";
  */
 export class Aggregate<T extends Record<any, any>> extends AggregateRoot {
   /** Internal properties of the aggregate, including its ID. */
-  private _props: T & { id: ID };
+  private _props: T;
+  /** The ID of the aggregate. */
+  private readonly _id: ID;
 
   /**
    * Creates a new instance of the aggregate.
@@ -23,7 +26,8 @@ export class Aggregate<T extends Record<any, any>> extends AggregateRoot {
 
     const id = ID.create(props.id as string).expect("Invalid ID");
 
-    this._props = { ...props, id };
+    this._props = { ...props };
+    this._id = id;
   }
 
   /**
@@ -32,7 +36,36 @@ export class Aggregate<T extends Record<any, any>> extends AggregateRoot {
    * @returns The `ID` instance of this aggregate.
    */
   get id(): ID {
-    return this._props.id;
+    return this._id;
+  }
+
+  /**
+   * Returns the aggregate's properties.
+   *
+   * @returns The aggregate's properties.
+   */
+  get props(): T {
+    return this._props;
+  }
+
+  /**
+   * Sets a property on the aggregate.
+   *
+   * @param key - The key of the property to set.
+   * @param value - The value to set the property to.
+   */
+  protected set<K extends keyof T>(key: K, value: T[K]): void {
+    this._props[key] = value;
+  }
+
+  /**
+   * Gets a property from the aggregate.
+   *
+   * @param key - The key of the property to get.
+   * @returns The value of the property.
+   */
+  public get<K extends keyof T>(key: K): T[K] {
+    return this._props[key];
   }
 
   /**
@@ -41,7 +74,7 @@ export class Aggregate<T extends Record<any, any>> extends AggregateRoot {
    * @returns `true` if the ID is considered new, otherwise `false`.
    */
   public isNew(): boolean {
-    return this._props.id.isNew();
+    return this._id.isNew();
   }
 
   /**
@@ -51,7 +84,7 @@ export class Aggregate<T extends Record<any, any>> extends AggregateRoot {
    * @returns `true` if the aggregates are the same instance or share the same ID.
    */
   public equals(aggregate: Aggregate<T>): boolean {
-    return aggregate === this || aggregate.id === this._props.id;
+    return aggregate === this || aggregate.id === this._id;
   }
 
   /**
@@ -60,6 +93,6 @@ export class Aggregate<T extends Record<any, any>> extends AggregateRoot {
    * @returns A shallow copy of the aggregate's properties.
    */
   public toObject(): T {
-    return { ...this._props };
+    return { ...this._props, id: this._id };
   }
 }

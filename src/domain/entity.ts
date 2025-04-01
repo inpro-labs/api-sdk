@@ -1,5 +1,6 @@
 import { ID } from "./id";
 import isEqual from "lodash.isequal";
+import { SettersAndGetters } from "./setters-and-getters";
 
 /**
  * Base class for domain entities.
@@ -9,9 +10,9 @@ import isEqual from "lodash.isequal";
  *
  * @template Props - The entity's properties.
  */
-export class Entity<T extends Record<string, unknown>> {
-  /** Internal properties of the entity, including its ID. */
-  private _props: T & { id: ID };
+export class Entity<T extends Record<any, any>> extends SettersAndGetters<T> {
+  /** The ID of the entity. */
+  private readonly _id: ID;
 
   /**
    * Creates a new instance of the entity.
@@ -22,7 +23,9 @@ export class Entity<T extends Record<string, unknown>> {
   constructor(props: T) {
     const id = ID.create(props.id as string).expect("Invalid ID");
 
-    this._props = { ...props, id };
+    super({ ...props });
+
+    this._id = id;
   }
 
   /**
@@ -31,7 +34,7 @@ export class Entity<T extends Record<string, unknown>> {
    * @returns The entity's `ID` instance.
    */
   get id(): ID {
-    return this._props.id;
+    return this._id;
   }
 
   /**
@@ -40,7 +43,7 @@ export class Entity<T extends Record<string, unknown>> {
    * @returns `true` if the ID is considered new, otherwise `false`.
    */
   public isNew(): boolean {
-    return this._props.id.isNew();
+    return this._id.isNew();
   }
 
   /**
@@ -50,7 +53,7 @@ export class Entity<T extends Record<string, unknown>> {
    * @returns `true` if the entities are the same instance or share the same ID.
    */
   public equals(entity: Entity<T>): boolean {
-    return entity === this || entity.id === this._props.id;
+    return entity === this || entity.id === this._id;
   }
 
   /**
