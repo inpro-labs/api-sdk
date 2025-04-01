@@ -51,6 +51,20 @@ export class Result<T, E extends Error = Error> {
   }
 
   /**
+   * Returns the error value or throws an error if it's a successful result.
+   *
+   * @returns The error value.
+   * @throws The error value if this result is a successful result.
+   */
+  unwrapErr(): E {
+    if (this.isErr()) {
+      return this.#err as E;
+    }
+
+    throw new Error("Tried to unwrapErr() on a successful Result");
+  }
+
+  /**
    * Returns the success value or throws a custom error message if it's an error.
    *
    * @param msg - Custom message to throw if this is an error result.
@@ -135,4 +149,25 @@ export function Ok<T>(value: T): Result<T> {
  */
 export function Err<E extends Error>(error: E): Result<never, E> {
   return new Result(null as never, error);
+}
+
+/**
+ * Combines an array of `Result` objects into a single `Result` object.
+ *
+ * @template T - The type of the success value.
+ * @template E - The type of the error value (extends Error).
+ *
+ * @param results - An array of `Result` objects to combine.
+ * @returns A `Result` object that contains the combined results.
+ */
+export function Combine<T, E extends Error>(
+  results: Result<T, E>[]
+): Result<T[], E> {
+  return results.reduce<Result<T[], E>>((acc, result) => {
+    if (result.isErr()) {
+      return Err(result.unwrapErr());
+    }
+
+    return Ok([...acc.unwrap(), result.unwrap()]) as Result<T[], E>;
+  }, Ok<T[]>([]) as Result<T[], E>);
 }
