@@ -1,6 +1,6 @@
 {
   "name": "@sputnik-labs/api-sdk",
-  "version": "0.0.7",
+  "version": "1.0.0",
   "description": "SDK for sputnik projects",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -32,5 +32,9 @@
   },
   "peerDependencies": {
     "@nestjs/cqrs": "^11.0.3"
+  },
+  "dependencies": {
+    "@types/lodash.isequal": "^4.5.8",
+    "lodash.isequal": "^4.5.0"
   }
 }
