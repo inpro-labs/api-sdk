@@ -1,6 +1,7 @@
 import { ID } from "./id";
 import isEqual from "lodash.isequal";
 import { SettersAndGetters } from "./setters-and-getters";
+import { Adapter } from "./adapter";
 
 /**
  * Base class for domain entities.
@@ -69,10 +70,17 @@ export class Entity<T extends Record<any, any>> extends SettersAndGetters<T> {
   /**
    * Converts the entity's properties to a plain JavaScript object.
    *
+   * @param adapter - An optional adapter to transform the entity's properties.
    * @returns A shallow copy of the entity's properties.
    */
-  public toObject(): Omit<T, "id"> & { id: ID } {
-    return { ...this._props, id: this._id };
+  public toObject<To = Omit<T, "id"> & { id: ID }>(
+    adapter?: Adapter<this, To>
+  ): To {
+    if (adapter && adapter.adaptOne) {
+      return adapter.adaptOne(this);
+    }
+
+    return { ...this._props, id: this._id } as To;
   }
 
   /**

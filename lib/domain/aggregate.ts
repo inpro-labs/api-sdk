@@ -1,6 +1,7 @@
 import { AggregateRoot } from "@nestjs/cqrs";
 import { ID } from "./id";
 import { SettersAndGetters } from "./setters-and-getters";
+import { Adapter } from "./adapter";
 
 /**
  * Base class for domain aggregates.
@@ -90,9 +91,16 @@ export class Aggregate<T extends Record<any, any>> extends AggregateRoot {
   /**
    * Converts the aggregate's properties to a plain JavaScript object.
    *
+   * @param adapter - An optional adapter to transform the aggregate's properties.
    * @returns A shallow copy of the aggregate's properties.
    */
-  public toObject(): Omit<T, "id"> & { id: ID } {
-    return { ...this._props, id: this._id };
+  public toObject<To = Omit<T, "id"> & { id: ID }>(
+    adapter?: Adapter<this, To>
+  ): To {
+    if (adapter && adapter.adaptOne) {
+      return adapter.adaptOne(this);
+    }
+
+    return { ...this._props, id: this._id } as To;
   }
 }
