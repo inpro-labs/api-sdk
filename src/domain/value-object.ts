@@ -1,4 +1,5 @@
 import isEqual from "lodash.isequal";
+import { SettersAndGetters } from "./setters-and-getters";
 
 /**
  * Base class for value objects in the domain layer.
@@ -8,17 +9,25 @@ import isEqual from "lodash.isequal";
  *
  * @template T - The shape of the value object's properties.
  */
-export class ValueObject<T extends Record<string, unknown>> {
-  /** Internal properties of the value object. */
-  private _props: T;
-
+export class ValueObject<
+  T extends Record<any, any>
+> extends SettersAndGetters<T> {
   /**
    * Creates a new value object instance.
    *
    * @param props - The properties that define the value object.
    */
   constructor(props: T) {
-    this._props = props;
+    super(props);
+  }
+
+  /**
+   * Returns the value object's properties.
+   *
+   * @returns The value object's properties.
+   */
+  get props(): T {
+    return this._props;
   }
 
   /**
