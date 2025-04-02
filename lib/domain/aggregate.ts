@@ -94,13 +94,13 @@ export class Aggregate<T extends Record<any, any>> extends AggregateRoot {
    * @param adapter - An optional adapter to transform the aggregate's properties.
    * @returns A shallow copy of the aggregate's properties.
    */
-  public toObject<To = Omit<T, "id"> & { id: ID }>(
+  public toObject<To = Omit<T, "id"> & { id: string }>(
     adapter?: Adapter<this, To>
   ): To {
     if (adapter && adapter.adaptOne) {
       return adapter.adaptOne(this);
     }
 
-    return { ...this._props, id: this._id } as To;
+    return { ...this._props, id: this._id.value() } as To;
   }
 }

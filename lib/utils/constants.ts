@@ -25,8 +25,8 @@
 export const createConstant = <T extends Record<string, unknown>>(
   value: T
 ): T & {
-  values: string[];
-  keys: string[];
+  values: (typeof value)[keyof typeof value][];
+  keys: (keyof typeof value)[];
 } => {
   const freezedValue = Object.freeze(value);
 
