@@ -1,8 +1,8 @@
 import { AggregateRoot } from "@nestjs/cqrs";
 import { ID } from "./id";
-import { SettersAndGetters } from "./setters-and-getters";
 import { Adapter } from "./adapter";
-
+import { IdentifiablePlainify } from "../utils/types";
+import { serializeProps } from "../utils/serializer";
 /**
  * Base class for domain aggregates.
  *
@@ -94,13 +94,20 @@ export class Aggregate<T extends Record<any, any>> extends AggregateRoot {
    * @param adapter - An optional adapter to transform the aggregate's properties.
    * @returns A shallow copy of the aggregate's properties.
    */
-  public toObject<To = Omit<T, "id"> & { id: string }>(
+  public toObject<To>(adapter: Adapter<this, To>): To;
+  public toObject(): IdentifiablePlainify<T>;
+  public toObject<To>(
     adapter?: Adapter<this, To>
-  ): To {
-    if (adapter && adapter.adaptOne) {
+  ): To | IdentifiablePlainify<T> {
+    if (adapter?.adaptOne) {
       return adapter.adaptOne(this);
     }
 
-    return { ...this._props, id: this._id.value() } as To;
+    const plainProps = serializeProps(this._props) as IdentifiablePlainify<T>;
+
+    return {
+      ...plainProps,
+      id: this._id.value(),
+    };
   }
 }

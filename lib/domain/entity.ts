@@ -2,6 +2,9 @@ import { ID } from "./id";
 import isEqual from "lodash.isequal";
 import { SettersAndGetters } from "./setters-and-getters";
 import { Adapter } from "./adapter";
+import { ValueObject } from "./value-object";
+import { serializeProps } from "../utils/serializer";
+import { IdentifiablePlainify } from "../utils/types";
 
 /**
  * Base class for domain entities.
@@ -22,7 +25,13 @@ export class Entity<T extends Record<any, any>> extends SettersAndGetters<T> {
    * @throws If the provided ID is invalid.
    */
   constructor(props: T) {
-    const id = ID.create(props.id as string).expect("Invalid ID");
+    let id: ID;
+
+    if (props.id instanceof ID) {
+      id = props.id;
+    } else {
+      id = ID.create(props.id).unwrap();
+    }
 
     super({ ...props });
 
@@ -73,16 +82,22 @@ export class Entity<T extends Record<any, any>> extends SettersAndGetters<T> {
    * @param adapter - An optional adapter to transform the entity's properties.
    * @returns A shallow copy of the entity's properties.
    */
-  public toObject<To = Omit<T, "id"> & { id: string }>(
+  public toObject<To>(adapter: Adapter<this, To>): To;
+  public toObject(): IdentifiablePlainify<T>;
+  public toObject<To>(
     adapter?: Adapter<this, To>
-  ): To {
-    if (adapter && adapter.adaptOne) {
+  ): To | IdentifiablePlainify<T> {
+    if (adapter?.adaptOne) {
       return adapter.adaptOne(this);
     }
 
-    return { ...this._props, id: this._id.value() } as To;
-  }
+    const plainProps = serializeProps(this._props) as IdentifiablePlainify<T>;
 
+    return {
+      ...plainProps,
+      id: this._id.value(),
+    };
+  }
   /**
    * Creates a deep clone of the entity.
    *
@@ -92,5 +107,3 @@ export class Entity<T extends Record<any, any>> extends SettersAndGetters<T> {
     return new (this.constructor as new (props: T) => this)(this._props);
   }
 }
-
-const entity = new Entity({ id: "123", name: "John" });

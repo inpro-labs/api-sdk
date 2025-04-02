@@ -1,6 +1,7 @@
 import isEqual from "lodash.isequal";
 import { SettersAndGetters } from "./setters-and-getters";
 import { Adapter } from "./adapter";
+import { serializeProps } from "../utils/serializer";
 
 /**
  * Base class for value objects in the domain layer.
@@ -62,7 +63,7 @@ export class ValueObject<
       return adapter.adaptOne(this);
     }
 
-    return { ...this._props };
+    return serializeProps(this._props) as T;
   }
 
   /**
