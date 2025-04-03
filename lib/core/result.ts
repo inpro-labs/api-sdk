@@ -1,5 +1,3 @@
-import { Entity } from "../domain";
-
 /**
  * A wrapper to represent the result of an operation that can succeed or fail.
  *
@@ -48,7 +46,7 @@ export class Result<T = unknown, E extends Error = Error> {
     if (this.isErr()) {
       throw this.#err as E;
     }
-
+    /* istanbul ignore next */
     throw new Error("Unknown error");
   }
 
@@ -82,6 +80,7 @@ export class Result<T = unknown, E extends Error = Error> {
       throw new Error(msg);
     }
 
+    /* istanbul ignore next */
     throw new Error(msg);
   }
 

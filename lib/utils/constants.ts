@@ -33,9 +33,9 @@ export const createConstant = <T extends Record<string, unknown>>(
   const values = Object.values(freezedValue);
   const keys = Object.keys(freezedValue);
 
-  return {
+  return Object.freeze({
     ...freezedValue,
     values,
     keys,
-  };
+  });
 };

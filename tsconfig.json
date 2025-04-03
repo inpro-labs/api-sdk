@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "outDir": "./dist",
-    "rootDir": "lib",
+    "rootDir": "./lib",
     "declaration": true,
     "declarationMap": true,
     "sourceMap": true,
@@ -13,14 +13,20 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "strict": true
+    "strict": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": [
+        "./lib/*"
+      ]
+    }
   },
   "include": [
     "lib/**/*",
-    "test/**/*"
   ],
   "exclude": [
     "node_modules",
-    "dist"
+    "dist",
+    "__tests__/**/*"
   ]
 }

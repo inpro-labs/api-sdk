@@ -44,7 +44,7 @@ export class ID {
    * @returns `true` if the underlying values match, otherwise `false`.
    */
   public equals(id: ID): boolean {
-    return this.value === id.value;
+    return this.value() === id.value();
   }
 
   /**
