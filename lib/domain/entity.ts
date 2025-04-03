@@ -2,8 +2,7 @@ import { ID } from "./id";
 import isEqual from "lodash.isequal";
 import { SettersAndGetters } from "./setters-and-getters";
 import { Adapter } from "./adapter";
-import { ValueObject } from "./value-object";
-import { serializeProps } from "../utils/serializer";
+import { serializeProps } from "../utils/serialize-props";
 import { IdentifiablePlainify } from "../utils/types";
 
 /**
@@ -91,12 +90,12 @@ export class Entity<T extends Record<any, any>> extends SettersAndGetters<T> {
       return adapter.adaptOne(this);
     }
 
-    const plainProps = serializeProps(this._props) as IdentifiablePlainify<T>;
+    const plainProps = serializeProps(this._props);
 
     return {
       ...plainProps,
       id: this._id.value(),
-    };
+    } as IdentifiablePlainify<T>;
   }
   /**
    * Creates a deep clone of the entity.

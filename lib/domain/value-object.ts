@@ -1,7 +1,7 @@
 import isEqual from "lodash.isequal";
 import { SettersAndGetters } from "./setters-and-getters";
 import { Adapter } from "./adapter";
-import { serializeProps } from "../utils/serializer";
+import { serializeProps } from "../utils/serialize-props";
 
 /**
  * Base class for value objects in the domain layer.

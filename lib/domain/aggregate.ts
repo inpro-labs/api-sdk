@@ -2,7 +2,7 @@ import { AggregateRoot } from "@nestjs/cqrs";
 import { ID } from "./id";
 import { Adapter } from "./adapter";
 import { IdentifiablePlainify } from "../utils/types";
-import { serializeProps } from "../utils/serializer";
+import { serializeProps } from "../utils/serialize-props";
 /**
  * Base class for domain aggregates.
  *
@@ -25,8 +25,13 @@ export class Aggregate<T extends Record<any, any>> extends AggregateRoot {
   constructor(props: T) {
     super();
 
-    const id = ID.create(props.id as string).expect("Invalid ID");
+    let id: ID;
 
+    if (props.id instanceof ID) {
+      id = props.id;
+    } else {
+      id = ID.create(props.id).unwrap();
+    }
     this._props = { ...props };
     this._id = id;
   }
@@ -85,7 +90,7 @@ export class Aggregate<T extends Record<any, any>> extends AggregateRoot {
    * @returns `true` if the aggregates are the same instance or share the same ID.
    */
   public equals(aggregate: Aggregate<T>): boolean {
-    return aggregate === this || aggregate.id === this._id;
+    return aggregate === this || this._id.equals(aggregate.id);
   }
 
   /**
@@ -103,11 +108,20 @@ export class Aggregate<T extends Record<any, any>> extends AggregateRoot {
       return adapter.adaptOne(this);
     }
 
-    const plainProps = serializeProps(this._props) as IdentifiablePlainify<T>;
+    const plainProps = serializeProps(this._props);
 
     return {
       ...plainProps,
       id: this._id.value(),
-    };
+    } as IdentifiablePlainify<T>;
+  }
+
+  /**
+   * Creates a deep clone of the aggregate.
+   *
+   * @returns A new instance of the aggregate with cloned properties.
+   */
+  public clone(): this {
+    return new (this.constructor as new (props: T) => this)(this._props);
   }
 }
