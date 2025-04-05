@@ -1,9 +1,9 @@
-import { ID } from "./id";
-import isEqual from "lodash.isequal";
-import { SettersAndGetters } from "./setters-and-getters";
-import { Adapter } from "./adapter";
-import { serializeProps } from "../utils/serialize-props";
-import { IdentifiablePlainify } from "../utils/types";
+import { ID } from './id';
+import isEqual from 'lodash.isequal';
+import { SettersAndGetters } from './setters-and-getters';
+import { Adapter } from './adapter';
+import { serializeProps } from '../utils/serialize-props';
+import { IdentifiablePlainify } from '../utils/types';
 
 /**
  * Base class for domain entities.
@@ -13,7 +13,9 @@ import { IdentifiablePlainify } from "../utils/types";
  *
  * @template Props - The entity's properties.
  */
-export class Entity<T extends Record<any, any>> extends SettersAndGetters<T> {
+export class Entity<
+  T extends Record<PropertyKey, unknown>,
+> extends SettersAndGetters<T> {
   /** The ID of the entity. */
   private readonly _id: ID;
 
@@ -29,7 +31,7 @@ export class Entity<T extends Record<any, any>> extends SettersAndGetters<T> {
     if (props.id instanceof ID) {
       id = props.id;
     } else {
-      id = ID.create(props.id).unwrap();
+      id = ID.create(props.id as string).unwrap();
     }
 
     super({ ...props });
@@ -84,7 +86,7 @@ export class Entity<T extends Record<any, any>> extends SettersAndGetters<T> {
   public toObject<To>(adapter: Adapter<this, To>): To;
   public toObject(): IdentifiablePlainify<T>;
   public toObject<To>(
-    adapter?: Adapter<this, To>
+    adapter?: Adapter<this, To>,
   ): To | IdentifiablePlainify<T> {
     if (adapter?.adaptOne) {
       return adapter.adaptOne(this);

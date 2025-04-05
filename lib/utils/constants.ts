@@ -23,7 +23,7 @@
  * Status.keys; // ["ACTIVE", "INACTIVE"]
  */
 export const createConstant = <T extends Record<string, unknown>>(
-  value: T
+  value: T,
 ): T & {
   values: (typeof value)[keyof typeof value][];
   keys: (keyof typeof value)[];

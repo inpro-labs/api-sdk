@@ -1,4 +1,4 @@
-import { Result } from "../core";
+import { Result } from '../core';
 
 /**
  * Represents a unique identifier (UUID) for domain entities or aggregates.
