@@ -19,6 +19,6 @@ type ErrResponse = {
  *
  * @template T - The type of the success payload.
  */
-export type MicroserviceResponse<T = Record<string, any>> =
+export type MicroserviceResponse<T = Record<PropertyKey, unknown>> =
   | OkResponse<T>
   | ErrResponse;

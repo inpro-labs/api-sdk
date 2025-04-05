@@ -19,10 +19,10 @@ export class Result<T = unknown, E extends Error = Error> {
    */
   constructor(ok: T | null, err: E | null) {
     if (!ok && !err) {
-      throw new Error("Result must have a value or an error");
+      throw new Error('Result must have a value or an error');
     }
     if (ok && err) {
-      throw new Error("Result cannot have both a value and and error");
+      throw new Error('Result cannot have both a value and and error');
     }
 
     if (ok !== null) {
@@ -47,7 +47,7 @@ export class Result<T = unknown, E extends Error = Error> {
       throw this.#err as E;
     }
     /* istanbul ignore next */
-    throw new Error("Unknown error");
+    throw new Error('Unknown error');
   }
 
   /**
@@ -61,7 +61,7 @@ export class Result<T = unknown, E extends Error = Error> {
       return this.#err as E;
     }
 
-    throw new Error("Tried to unwrapErr() on a successful Result");
+    throw new Error('Tried to unwrapErr() on a successful Result');
   }
 
   /**
@@ -166,7 +166,7 @@ type ResultArray<T extends readonly unknown[], E extends Error> = {
 };
 
 export function Combine<T extends readonly unknown[], E extends Error>(
-  results: ResultArray<T, E>
+  results: ResultArray<T, E>,
 ): Result<T, E> {
   const values: unknown[] = [];
 

@@ -1,8 +1,8 @@
-import { AggregateRoot } from "@nestjs/cqrs";
-import { ID } from "./id";
-import { Adapter } from "./adapter";
-import { IdentifiablePlainify } from "../utils/types";
-import { serializeProps } from "../utils/serialize-props";
+import { AggregateRoot } from '@nestjs/cqrs';
+import { ID } from './id';
+import { Adapter } from './adapter';
+import { IdentifiablePlainify } from '../utils/types';
+import { serializeProps } from '../utils/serialize-props';
 /**
  * Base class for domain aggregates.
  *
@@ -11,7 +11,9 @@ import { serializeProps } from "../utils/serialize-props";
  *
  * @template T - The type of the aggregate's properties.
  */
-export class Aggregate<T extends Record<any, any>> extends AggregateRoot {
+export class Aggregate<
+  T extends Record<string | number, unknown>,
+> extends AggregateRoot {
   /** Internal properties of the aggregate, including its ID. */
   private _props: T;
   /** The ID of the aggregate. */
@@ -30,7 +32,7 @@ export class Aggregate<T extends Record<any, any>> extends AggregateRoot {
     if (props.id instanceof ID) {
       id = props.id;
     } else {
-      id = ID.create(props.id).unwrap();
+      id = ID.create(props.id as string).unwrap();
     }
     this._props = { ...props };
     this._id = id;
@@ -102,7 +104,7 @@ export class Aggregate<T extends Record<any, any>> extends AggregateRoot {
   public toObject<To>(adapter: Adapter<this, To>): To;
   public toObject(): IdentifiablePlainify<T>;
   public toObject<To>(
-    adapter?: Adapter<this, To>
+    adapter?: Adapter<this, To>,
   ): To | IdentifiablePlainify<T> {
     if (adapter?.adaptOne) {
       return adapter.adaptOne(this);

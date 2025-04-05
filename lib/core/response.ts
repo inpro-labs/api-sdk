@@ -1,4 +1,4 @@
-import { MicroserviceResponse } from "@/contracts/microservice-response";
+import { MicroserviceResponse } from '@/contracts/microservice-response';
 
 /**
  * Utility class for creating standardized microservice responses.
@@ -14,7 +14,7 @@ export class Response {
    */
   static ok<T = any>(
     data: T,
-    statusCode: number = 201
+    statusCode: number = 201,
   ): MicroserviceResponse<T> {
     return { success: true, statusCode, data: data };
   }
@@ -30,7 +30,7 @@ export class Response {
   static err(
     message: string,
     code?: string,
-    statusCode: number = 500
+    statusCode: number = 500,
   ): MicroserviceResponse {
     return { success: false, statusCode, message, code };
   }

@@ -1,7 +1,6 @@
 {
   "compilerOptions": {
     "outDir": "./dist",
-    "rootDir": "./lib",
     "declaration": true,
     "declarationMap": true,
     "sourceMap": true,
@@ -23,10 +22,10 @@
   },
   "include": [
     "lib/**/*",
+    "__tests__/**/*"
   ],
   "exclude": [
     "node_modules",
-    "dist",
-    "__tests__/**/*"
+    "dist"
   ]
 }
