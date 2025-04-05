@@ -13,4 +13,12 @@ type ErrResponse = {
   data?: undefined;
 };
 
-export type MicroserviceResponse<T> = OkResponse<T> | ErrResponse;
+/**
+ * Union type for microservice responses,
+ * either a success with data or an error with a message.
+ *
+ * @template T - The type of the success payload.
+ */
+export type MicroserviceResponse<T = Record<string, any>> =
+  | OkResponse<T>
+  | ErrResponse;
