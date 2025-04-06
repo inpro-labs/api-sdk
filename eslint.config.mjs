@@ -14,6 +14,7 @@ export default tseslint.config(
       '**/*.d.ts',
       'test/**/*',
       'dist/**/*',
+      'Gruntfile.js',
     ],
   },
   eslint.configs.recommended,
