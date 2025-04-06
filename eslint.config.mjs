@@ -13,6 +13,7 @@ export default tseslint.config(
       'tsconfig.spec.json',
       '**/*.d.ts',
       'test/**/*',
+      'dist/**/*',
     ],
   },
   eslint.configs.recommended,

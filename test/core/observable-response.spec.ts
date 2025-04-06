@@ -1,10 +1,10 @@
-import { Response } from '../../lib/core/response';
+import { ObservableResponse } from '../../lib/core/observable-response';
 
-describe('Response', () => {
+describe('ObservableResponse', () => {
   describe('ok', () => {
     it('should return a success response with data and default statusCode 201', () => {
       const data = { id: '123', name: 'Maxwell' };
-      const result = Response.ok(data);
+      const result = ObservableResponse.ok(data);
 
       expect(result).toEqual({
         success: true,
@@ -15,7 +15,7 @@ describe('Response', () => {
 
     it('should allow overriding statusCode in success response', () => {
       const data = { id: '123' };
-      const result = Response.ok(data, 200);
+      const result = ObservableResponse.ok(data, 200);
 
       expect(result).toEqual({
         success: true,
@@ -27,7 +27,7 @@ describe('Response', () => {
 
   describe('err', () => {
     it('should return an error response with message and default statusCode 500', () => {
-      const result = Response.err('Something went wrong');
+      const result = ObservableResponse.err('Something went wrong');
 
       expect(result).toEqual({
         success: false,
@@ -37,7 +37,11 @@ describe('Response', () => {
     });
 
     it('should allow setting custom statusCode and code in error response', () => {
-      const result = Response.err('User not found', 404, 'USER_NOT_FOUND');
+      const result = ObservableResponse.err(
+        'User not found',
+        404,
+        'USER_NOT_FOUND',
+      );
 
       expect(result).toEqual({
         success: false,
