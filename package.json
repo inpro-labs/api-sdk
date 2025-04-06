@@ -1,6 +1,6 @@
 {
   "name": "@inpro-labs/api-sdk",
-  "version": "2.0.2",
+  "version": "1.0.0-pre.1",
   "description": "SDK for inpro services",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -12,19 +12,19 @@
     "build": "tsc",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
-    "prepare": "husky init",
+    "prepare": "husky",
     "lint": "eslint \"lib/**/*.ts\" --fix"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/sputnik-labs/api-sdk.git"
+    "url": "git+https://github.com/inpro-labs/api-sdk.git"
   },
   "author": "Maxwell Macedo",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/sputnik-labs/api-sdk/issues"
+    "url": "https://github.com/inpro-labs/api-sdk/issues"
   },
-  "homepage": "https://github.com/sputnik-labs/api-sdk#readme",
+  "homepage": "https://github.com/inpro-labs/api-sdk#readme",
   "devDependencies": {
     "@types/jest": "^29.5.14",
     "grunt": "^1.6.1",
