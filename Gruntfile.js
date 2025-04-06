@@ -1,13 +1,13 @@
 module.exports = function (grunt) {
   grunt.initConfig({
     clean: {
-      dist: ['dist']
+      dist: ['dist'],
     },
     shell: {
       build: {
-        command: 'tsc'
-      }
-    }
+        command: 'npm run build',
+      },
+    },
   });
 
   grunt.loadNpmTasks('grunt-contrib-clean');
