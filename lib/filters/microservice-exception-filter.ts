@@ -1,7 +1,7 @@
 import { Catch, Logger, RpcExceptionFilter } from '@nestjs/common';
 import { Observable, throwError } from 'rxjs';
 import { MicroserviceResponse } from '@/contracts/microservice-response';
-import { Response } from '@/core/response';
+import { ObservableResponse } from '@/core/observable-response';
 import { ApplicationException } from '@/core/errors/application-exception';
 import { ZodError } from 'zod';
 
@@ -27,13 +27,13 @@ export class MicroserviceExceptionFilter implements RpcExceptionFilter {
     let response: MicroserviceResponse<any>;
 
     if (exception instanceof ZodError) {
-      response = Response.err(
+      response = ObservableResponse.err(
         exception.errors[0].message,
         400,
         'VALIDATION_ERROR',
       );
     } else if (exception instanceof ApplicationException) {
-      response = Response.err(
+      response = ObservableResponse.err(
         exception.message,
         exception.statusCode,
         exception.code,
@@ -43,7 +43,7 @@ export class MicroserviceExceptionFilter implements RpcExceptionFilter {
 
       logger.error(exception);
 
-      response = Response.err(
+      response = ObservableResponse.err(
         'Internal server error',
         500,
         'INTERNAL_SERVER_ERROR',

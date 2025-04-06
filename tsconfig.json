@@ -2,27 +2,26 @@
   "compilerOptions": {
     "outDir": "./dist",
     "declaration": true,
+    "emitDeclarationOnly": false,
     "declarationMap": true,
     "sourceMap": true,
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
     "target": "ES2022",
-    "module": "CommonJS",
+    "module": "ESNext",
     "moduleResolution": "node",
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
     "strict": true,
+    "forceConsistentCasingInFileNames": true,
     "baseUrl": "./",
     "paths": {
       "@/*": [
-        "./lib/*"
+        "lib/*"
       ]
     },
     "rootDir": "./lib"
   },
   "include": [
-    "lib/**/*",
+    "lib/**/*"
   ],
   "exclude": [
     "node_modules",

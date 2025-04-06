@@ -3,7 +3,7 @@ import { MicroserviceResponse } from '@/contracts/microservice-response';
 /**
  * Utility class for creating standardized microservice responses.
  */
-export class Response {
+export class ObservableResponse {
   /**
    * Creates a successful response.
    *
@@ -12,7 +12,7 @@ export class Response {
    * @param {number} [statusCode=201] - Optional HTTP status code (default is 201).
    * @returns {MicroserviceResponse<T>} The standardized success response.
    */
-  static ok<T = any>(
+  static ok<T = unknown>(
     data: T,
     statusCode: number = 201,
   ): MicroserviceResponse<T> {
