@@ -2,6 +2,7 @@ import isEqual from 'lodash.isequal';
 import { SettersAndGetters } from './setters-and-getters';
 import { Adapter } from './adapter';
 import { serializeProps } from '../utils/serialize-props';
+import { IdentifiablePlainify } from '@/utils/types';
 
 /**
  * Base class for value objects in the domain layer.
@@ -58,12 +59,14 @@ export class ValueObject<
    * @param adapter - An optional adapter to transform the value object's properties.
    * @returns A plain object containing the value object's properties.
    */
-  public toObject<To = T>(adapter?: Adapter<this, To>): To {
+  public toObject<To = IdentifiablePlainify<T>>(
+    adapter?: Adapter<this, To>,
+  ): To {
     if (adapter && adapter.adaptOne) {
       return adapter.adaptOne(this);
     }
 
-    return serializeProps(this._props) as T;
+    return serializeProps(this._props) as To;
   }
 
   /**

@@ -1,4 +1,4 @@
-import { Adapter } from "../../lib/domain/adapter";
+import { Adapter } from '../../lib/domain/adapter';
 
 type FullNameProps = { first: string; last: string };
 type FullNameDTO = { fullName: string };
@@ -13,27 +13,27 @@ class FullNameAdapter implements Adapter<FullNameProps, FullNameDTO> {
   }
 }
 
-describe("FullNameAdapter", () => {
+describe('FullNameAdapter', () => {
   const adapter = new FullNameAdapter();
 
-  it("should adapt a single object", () => {
-    const input = { first: "Maxwell", last: "Silva" };
+  it('should adapt a single object', () => {
+    const input = { first: 'Maxwell', last: 'Silva' };
     const result = adapter.adaptOne(input);
 
-    expect(result).toEqual({ fullName: "Maxwell Silva" });
+    expect(result).toEqual({ fullName: 'Maxwell Silva' });
   });
 
-  it("should adapt many objects", () => {
+  it('should adapt many objects', () => {
     const input = [
-      { first: "Ana", last: "Costa" },
-      { first: "João", last: "Oliveira" },
+      { first: 'Ana', last: 'Costa' },
+      { first: 'João', last: 'Oliveira' },
     ];
 
     const result = adapter.adaptMany(input);
 
     expect(result).toEqual([
-      { fullName: "Ana Costa" },
-      { fullName: "João Oliveira" },
+      { fullName: 'Ana Costa' },
+      { fullName: 'João Oliveira' },
     ]);
   });
 });

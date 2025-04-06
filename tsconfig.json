@@ -6,23 +6,23 @@
     "sourceMap": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "target": "ES2020",
+    "target": "ES2022",
     "module": "CommonJS",
     "moduleResolution": "node",
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,
-    "baseUrl": ".",
+    "baseUrl": "./",
     "paths": {
       "@/*": [
         "./lib/*"
       ]
-    }
+    },
+    "rootDir": "./lib"
   },
   "include": [
     "lib/**/*",
-    "__tests__/**/*"
   ],
   "exclude": [
     "node_modules",

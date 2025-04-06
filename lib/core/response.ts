@@ -29,8 +29,8 @@ export class Response {
    */
   static err(
     message: string,
-    code?: string,
     statusCode: number = 500,
+    code?: string,
   ): MicroserviceResponse {
     return { success: false, statusCode, message, code };
   }
