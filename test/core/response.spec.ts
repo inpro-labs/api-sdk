@@ -37,7 +37,7 @@ describe('Response', () => {
     });
 
     it('should allow setting custom statusCode and code in error response', () => {
-      const result = Response.err('User not found', 'USER_NOT_FOUND', 404);
+      const result = Response.err('User not found', 404, 'USER_NOT_FOUND');
 
       expect(result).toEqual({
         success: false,
