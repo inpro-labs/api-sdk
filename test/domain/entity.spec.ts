@@ -42,6 +42,11 @@ describe('Entity', () => {
     });
 
     expect(entity).toBeDefined();
+    expect(entity.id).toBeDefined();
+    expect(entity.id.value()).toBe('1');
+    expect(entity.get('name')).toBe('John Doe');
+    expect(entity.get('value')).toBeDefined();
+    expect(entity.get('value').props.teste).toBe('John Doe');
   });
 
   it('should transform to object', () => {

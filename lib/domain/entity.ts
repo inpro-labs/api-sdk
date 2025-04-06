@@ -14,7 +14,7 @@ import { IdentifiablePlainify } from '../utils/types';
  * @template Props - The entity's properties.
  */
 export class Entity<
-  T extends Record<PropertyKey, unknown>,
+  T extends object = Record<PropertyKey, any>,
 > extends SettersAndGetters<T> {
   /** The ID of the entity. */
   private readonly _id: ID;
@@ -25,7 +25,7 @@ export class Entity<
    * @param props - The entity's properties, including an `id`.
    * @throws If the provided ID is invalid.
    */
-  constructor(props: T) {
+  constructor(props: T & { id?: string | ID }) {
     let id: ID;
 
     if (props.id instanceof ID) {
@@ -92,7 +92,9 @@ export class Entity<
       return adapter.adaptOne(this);
     }
 
-    const plainProps = serializeProps(this._props);
+    const plainProps = serializeProps(
+      this._props as Record<PropertyKey, unknown>,
+    );
 
     return {
       ...plainProps,
