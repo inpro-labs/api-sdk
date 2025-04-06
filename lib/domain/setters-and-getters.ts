@@ -1,4 +1,4 @@
-export class SettersAndGetters<T extends Record<PropertyKey, unknown>> {
+export class SettersAndGetters<T extends object = object> {
   /** Internal properties of the entity, including its ID. */
   protected _props: T;
 

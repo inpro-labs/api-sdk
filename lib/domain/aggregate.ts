@@ -3,6 +3,7 @@ import { ID } from './id';
 import { Adapter } from './adapter';
 import { IdentifiablePlainify } from '../utils/types';
 import { serializeProps } from '../utils/serialize-props';
+
 /**
  * Base class for domain aggregates.
  *
@@ -12,7 +13,7 @@ import { serializeProps } from '../utils/serialize-props';
  * @template T - The type of the aggregate's properties.
  */
 export class Aggregate<
-  T extends Record<string | number, unknown>,
+  T extends object = Record<PropertyKey, unknown>,
 > extends AggregateRoot {
   /** Internal properties of the aggregate, including its ID. */
   private _props: T;
@@ -24,7 +25,7 @@ export class Aggregate<
    *
    * @param props - The aggregate's properties, including an `id`.
    */
-  constructor(props: T) {
+  constructor(props: T & { id?: string | ID }) {
     super();
 
     let id: ID;
@@ -110,7 +111,9 @@ export class Aggregate<
       return adapter.adaptOne(this);
     }
 
-    const plainProps = serializeProps(this._props);
+    const plainProps = serializeProps(
+      this._props as Record<PropertyKey, unknown>,
+    );
 
     return {
       ...plainProps,
