@@ -105,4 +105,20 @@ describe('Combine()', () => {
     expect(result.isErr()).toBe(true);
     expect(result.unwrapErr()).toBe(err);
   });
+
+  it('fromPromise() should return a successful result', async () => {
+    const result = await Result.fromPromise(Promise.resolve('yes'));
+
+    expect(result.isOk()).toBe(true);
+    expect(result.unwrap()).toBe('yes');
+  });
+
+  it('fromPromise() should return an error result', async () => {
+    const error = new Error('fail');
+
+    const result = await Result.fromPromise(Promise.reject(error));
+
+    expect(result.isErr()).toBe(true);
+    expect(result.unwrapErr()).toBe(error);
+  });
 });

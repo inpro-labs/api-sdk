@@ -112,6 +112,26 @@ export class Result<T = unknown, E extends Error = Error> {
   }
 
   /**
+   * Creates a `Result` from a `Promise`.
+   *
+   * @template T - The type of the success value.
+   * @template E - The type of the error value (extends Error).
+   * @param promise - The promise to convert.
+   * @returns A `Promise` that resolves to a `Result`.
+   */
+  static async fromPromise<T, E extends Error>(
+    promise: Promise<T>,
+  ): Promise<Result<T, E>> {
+    try {
+      const value = await promise;
+
+      return Ok(value);
+    } catch (error) {
+      return Err(error as E);
+    }
+  }
+
+  /**
    * Creates a successful result.
    *
    * @param value - The success value.
